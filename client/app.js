@@ -10,6 +10,12 @@ const inpEmailAuth = document.querySelector('.E-mail-inp-auth');
 const inpPasswordAuth = document.querySelector('.Password-inp-auth');
 
 btnReg.addEventListener('click', async () => {
+    const usernameP = document.querySelector('.username_p');
+    const emailP = document.querySelector('.email_p');
+    const phoneP = document.querySelector('.phone_p');
+    const idP = document.querySelector('.id_p');
+
+
     const objectToSerwerReg = {
         username: inpUsernameReg.value,
         email: inpEmailReg.value,
@@ -27,6 +33,12 @@ btnReg.addEventListener('click', async () => {
 
     console.log(response.status);
     console.log(await response.json());
+    const result = await response.json()
+
+    usernameP.innerHTML = result[0].username;
+    emailP.innerHTML = result[0].email;
+    phoneP.innerHTML = result[0].phone;
+    idP.innerHTML = result[0].id;
 
 });
 

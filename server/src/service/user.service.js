@@ -17,6 +17,7 @@ async function registerUser(user) {
   storage.push({ id: uuid.v1(), ...user, pwd: hashed });
   writeFileSync(path, JSON.stringify(storage));
 }
+
 async function authorizeUser(user) {
   const storage = JSON.parse(readFileSync(path));
 
@@ -26,4 +27,13 @@ async function authorizeUser(user) {
   if (!(await compare(user.pwd, found.pwd))) throw new HttpException(400, ExceptionType.USER_AUTH_INVALID_PASSWORD);
 }
 
-module.exports = { registerUser, authorizeUser };
+async function getAllUser() {
+  const storage = JSON.parse(readFileSync(path));
+
+  // const found = storage.find() ?? null;
+  if (!storage) throw new HttpException(404, ExceptionType.USER_GETALL_NOT_FOUND);
+
+  return storage
+}
+
+module.exports = { registerUser, authorizeUser, getAllUser };
